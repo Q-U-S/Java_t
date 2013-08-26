@@ -9,13 +9,8 @@ public class Percolation {
 	private boolean[] wqfItemStatus;
 	private int iEleNumTotal;
 	private int iN;
-	
-	public static void main(String[] args){
-		System.out.println("this si percolation!\n");
-		return;
-	}
-	
-   public Percolation(int N){              // create N-by-N grid, with all sites blocked
+
+	public Percolation(int N){              // create N-by-N grid, with all sites blocked
 	   int i;	   
 	   iEleNumTotal = N*N + 2;
 	   iN = N;
@@ -25,15 +20,19 @@ public class Percolation {
 	   for (i = 0 ; i < iEleNumTotal; i ++){
 		   wqfItemStatus[i] = false;
 	   }
-	   wqfItemStatus[0] = true;
-	   wqfItemStatus[N*N + 1] = true;
+	   wqfItemStatus[iEleNumTotal - 2] = true;
+	   wqfItemStatus[iEleNumTotal - 1] = true;
 	   
-   }
-   public void open(int i, int j){         // open site (row i, column j) if it is not already
-	   int iElementId = i*iN + j;
-	   if(i > iN || j > iN || i < 0 || j < 0){
-		   return;
-	   }
+	}
+	public void open(int i, int j){         // open site (row i, column j) if it is not already
+	   int iElementId;
+	   if (i < 1 || i > iN) throw new IndexOutOfBoundsException("row index i out of bounds");
+	   if (j < 1 || j > iN) throw new IndexOutOfBoundsException("col index i out of bounds");
+	   
+	   i -= 1;
+	   j -= 1;
+	   iElementId = i*iN + j;
+	   
 	   if(wqfItemStatus[iElementId]){
 		   return;
 	   }
@@ -41,17 +40,17 @@ public class Percolation {
 	   //   /\
 	   //   || 
 	   if(i>0){
-		   if(wqfItemStatus[(i-1)* iN + j]){
+		   if(wqfItemStatus[(i-1)*iN + j]){
 			   wqfItems.union((i-1)* iN + j, iElementId);
 		   }
 	   }else{
-		   wqfItems.union(0, iElementId);
+		   wqfItems.union(iEleNumTotal - 2, iElementId);
 	   }
 	   
 	   
 	   //   ||
 	   //   \/ 
-	   if(i<iN){
+	   if(i<iN - 1){
 		   if(wqfItemStatus[(i+1)* iN + j]){
 			   wqfItems.union((i+1)* iN + j, iElementId);   
 		   }
@@ -62,29 +61,32 @@ public class Percolation {
 	   
 	   //   <--
 	   if(j>0){
-		   if(wqfItemStatus[(i)* iN + j - 1]){
-			   wqfItems.union((i-1)* iN + j - 1, iElementId);
+		   if(wqfItemStatus[i* iN + j - 1]){
+			   wqfItems.union(i* iN + j - 1, iElementId);
 		   }
 	   }
 	   //   -->
-	   if(j<iN){
-		   if(wqfItemStatus[(i)* iN + j + 1]){
-			   wqfItems.union((i-1)* iN + j + 1, iElementId);
+	   if(j<iN-1){
+		   if(wqfItemStatus[i* iN + j + 1]){
+			   wqfItems.union(i* iN + j + 1, iElementId);
 		   }
 	   }
 	   wqfItemStatus[iElementId] = true;
 	   return;
 	   
-   }
-   public boolean isOpen(int i, int j){    // is site (row i, column j) open?
-	   return wqfItemStatus[i*iN + j];
-   }
-   public boolean isFull(int i, int j){    // is site (row i, column j) full?
-	   if (i <= 0 || i > iN) throw new IndexOutOfBoundsException("row index i out of bounds");
-	   if (j <= 0 || j > iN) throw new IndexOutOfBoundsException("row index i out of bounds");
-	   return wqfItems.connected(0, (i-1)*iN + j);
-   }
-   public boolean percolates(){            // does the system percolate?
-	   return wqfItems.connected(0, iEleNumTotal-1);
-   }
+	}
+	public boolean isOpen(int i, int j){    // is site (row i, column j) open?
+	   if (i < 1 || i > iN) throw new IndexOutOfBoundsException("row index i out of bounds");
+	   if (j < 1 || j > iN) throw new IndexOutOfBoundsException("col index i out of bounds");
+	   
+	   return wqfItemStatus[(i-1)*iN + j-1];
+	}
+	public boolean isFull(int i, int j){    // is site (row i, column j) full?
+	   if (i < 1 || i > iN) throw new IndexOutOfBoundsException("row index i out of bounds");
+	   if (j < 1 || j > iN) throw new IndexOutOfBoundsException("col index i out of bounds");
+	   return wqfItems.connected(iEleNumTotal-2, (i-1)*iN + j-1);
+	}
+	public boolean percolates(){            // does the system percolate?
+	   return wqfItems.connected(iEleNumTotal-2, iEleNumTotal-1);
+	}
 }
