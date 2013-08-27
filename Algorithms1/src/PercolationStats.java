@@ -7,6 +7,10 @@ public class PercolationStats {
 	public PercolationStats(int N, int T){    // perform T independent computational experiments on an N-by-N grid
 		iNSize = N;
 		iTimesNum = T;
+		double dTime;
+		Stopwatch tWatch = new Stopwatch(); // init
+		dTime = tWatch.elapsedTime();// get elapsed time
+		
 	}
 	public double mean(){                     // sample mean of percolation threshold
 		return 0;

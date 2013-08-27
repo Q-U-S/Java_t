@@ -1,0 +1,62 @@
+<project name="MyProject" default="all" basedir=".">
+
+<target name="init" depends="prepare" description="Initialize and set up properties">
+    <property name="src.dir" location="./src/" />
+    <property name="build.dir" value="build" />
+    <property name="library.dir" value="lib" />
+    <property name="apidoc.dir" value="apidoc" />
+</target>
+
+<target name="prepare" description="Making required directories">
+    <mkdir dir="build" />
+    <mkdir dir="apidoc" />
+</target>
+
+<target name="compile" depends="init" description="Compiling necessary files">
+    <javac destdir="${build.dir}" includeantruntime="first">
+        <src path="${src.dir}" />
+        <classpath>
+            <pathelement path="${build.dir}" />
+            <fileset dir="${library.dir}" includes="**/*.jar" />
+        </classpath>
+    </javac>
+</target>
+
+<target name="javadoc" depends="init" description="Generating useful javadocs">
+    <javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}">
+        <fileset dir="${src.dir}">
+            <include name="**/*.java" />
+        </fileset>
+        <classpath>
+            <fileset dir="${library.dir}" includes="**/*.jar" />
+         </classpath>
+    </javadoc>
+</target>
+
+<target name="jar" depends="compile" description="JARing files for distribution">
+    <jar destfile="${build.dir}/InteractivePercolationVisualizer.jar" basedir="${build.dir}" excludes="**/*.jar">
+        <manifest>
+            <attribute name="Main-Class" value="InteractivePercolationVisualizer" />
+            <attribute name="Class-Path" value="${library.dir}/**/*.jar" />
+        </manifest>
+    </jar>
+</target>
+
+<target name="run" depends="jar" description="Now running the program">
+    <java jar="${build.dir}/InteractivePercolationVisualizer.jar" fork="true">
+        <classpath>
+            <fileset dir="${library.dir}" includes="**/*.jar" />        
+        </classpath>
+    </java>
+</target>
+
+<target name="all" depends="run" description="Doing EVERYTHING!">
+</target>
+
+<target name="clean" depends="init" description="Cleaning Directories">
+    <delete dir="${build.dir}" />
+    <delete dir="${apidoc.dir}" />
+</target>
+                 
+
+           </project>
