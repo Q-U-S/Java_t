@@ -5,6 +5,7 @@
 
 public class Percolation {
     private WeightedQuickUnionUF wqfItems;
+    private WeightedQuickUnionUF wqfItemsNoBottom;
     private boolean[] wqfItemStatus;
     private int iEleNumTotal;
     private int iN;
@@ -15,13 +16,13 @@ public class Percolation {
 	iN = N;
 
 	wqfItems = new WeightedQuickUnionUF(iEleNumTotal);
+	wqfItemsNoBottom = new WeightedQuickUnionUF(iEleNumTotal - 1);
 	wqfItemStatus = new boolean[iEleNumTotal];
 	for (i = 0; i < iEleNumTotal; i++) {
 	    wqfItemStatus[i] = false;
 	}
 	wqfItemStatus[iEleNumTotal - 2] = true;
 	wqfItemStatus[iEleNumTotal - 1] = true;
-
     }
 
     public void open(int i, int j) { // open site (row i, column j) if it is not
@@ -45,9 +46,11 @@ public class Percolation {
 	if (i > 0) {
 	    if (wqfItemStatus[(i - 1) * iN + j]) {
 		wqfItems.union((i - 1) * iN + j, iElementId);
+		wqfItemsNoBottom.union((i - 1) * iN + j, iElementId);
 	    }
 	} else {
 	    wqfItems.union(iEleNumTotal - 2, iElementId);
+	    wqfItemsNoBottom.union(iEleNumTotal - 2, iElementId);
 	}
 
 	// ||
@@ -55,6 +58,7 @@ public class Percolation {
 	if (i < iN - 1) {
 	    if (wqfItemStatus[(i + 1) * iN + j]) {
 		wqfItems.union((i + 1) * iN + j, iElementId);
+		wqfItemsNoBottom.union((i + 1) * iN + j, iElementId);
 	    }
 
 	} else {
@@ -65,12 +69,14 @@ public class Percolation {
 	if (j > 0) {
 	    if (wqfItemStatus[i * iN + j - 1]) {
 		wqfItems.union(i * iN + j - 1, iElementId);
+		wqfItemsNoBottom.union(i * iN + j - 1, iElementId);
 	    }
 	}
 	// -->
 	if (j < iN - 1) {
 	    if (wqfItemStatus[i * iN + j + 1]) {
 		wqfItems.union(i * iN + j + 1, iElementId);
+		wqfItemsNoBottom.union(i * iN + j + 1, iElementId);
 	    }
 	}
 	wqfItemStatus[iElementId] = true;
@@ -92,7 +98,7 @@ public class Percolation {
 	    throw new IndexOutOfBoundsException("row index i out of bounds");
 	if (j < 1 || j > iN)
 	    throw new IndexOutOfBoundsException("col index i out of bounds");
-	return wqfItems.connected(iEleNumTotal - 2, (i - 1) * iN + j - 1);
+	return wqfItemsNoBottom.connected(iEleNumTotal - 2, (i - 1) * iN + j - 1);
     }
 
     public boolean percolates() { // does the system percolate?
