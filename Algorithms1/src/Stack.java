@@ -156,6 +156,7 @@ public class Stack<Item> implements Iterable<Item> {
      */
     public static void main(String[] args) {
         Stack<String> s = new Stack<String>();
+	//Stack<Integer> s = new Stack<Integer>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-")) s.push(item);

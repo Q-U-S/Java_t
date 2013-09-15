@@ -140,7 +140,7 @@ public class Deque<Item> implements Iterable<Item> {
 	private DecElement current = eHead;
 
 	public boolean hasNext() {
-	    return current.next != null;
+	    return current.prev != null;
 	}
 
 	public void remove() {
@@ -152,19 +152,20 @@ public class Deque<Item> implements Iterable<Item> {
 	    if (!hasNext())
 		throw new NoSuchElementException();
 	    Item item = current.item;
-	    current = current.next;
+	    current = current.prev;
 	    return item;
 	}
     }
 
     public static void main(String[] args){
-	Deque<long> tDeq = new Deque<int>();
-	for(int i = 0 ; i < 10 ; i++){
-	    testDeque.addFirst(i);
+	Deque<Integer> tDeq = new Deque<Integer>();
+	int i;
+	for(i = 0 ; i < 10 ; i++){
+	    tDeq.addFirst(i);
 	}
 	
-	for (int num : testDeque) {
-	    StdOut.println(i);
+	for (int num : tDeq) {
+	    StdOut.println(num);
 	}
 	StdOut.println("Hello world!");
     }
