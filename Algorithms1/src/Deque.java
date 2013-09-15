@@ -140,7 +140,7 @@ public class Deque<Item> implements Iterable<Item> {
 	private DecElement current = eHead;
 
 	public boolean hasNext() {
-	    return current.prev != null;
+	    return current != null;
 	}
 
 	public void remove() {
