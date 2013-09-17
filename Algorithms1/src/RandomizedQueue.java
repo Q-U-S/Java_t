@@ -16,20 +16,21 @@ import java.lang.UnsupportedOperationException;
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item[] rQueueStorage;
-    private boolean[] rQueueStorageDP; //Because data proof... or some thing
+    
+    //private boolean[] rQueueStorageDP; //Because data proof... or some thing
     //private int rqStorageSize;
-    private int lastIt;
-    private int firstIt;
+    //private int lastIt;
+    //private int firstIt;
     private int numIt;
     /**
      * construct an empty randomized queue
      */
     public RandomizedQueue(){
 	rQueueStorage = (Item[]) new Object[2];
-	rQueueStorageDP = new boolean[2];
+	//rQueueStorageDP = new boolean[2];
 	numIt = 0;
-	firstIt = 0;
-	lastIt = 0;
+	//firstIt = 0;
+	//lastIt = 0;
     }
     
     /**
@@ -52,23 +53,28 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      */
     public void enqueue(Item item){  
 	if(item == null) throw new java.lang.NullPointerException("Unable to add null element to queue");
-	
-	if(lastIt < rQueueStorage.length){
-	    lastIt += 1;
-	    numIt+=1;
-	    rQueueStorage[lastIt] = item;
-	    return;
-	}else if(lastIt == rQueueStorage.length){
-	    if(rQueueStorage.length/2 > numIt){
-		Item tmpIt;
-		int i,curFreeId=0;
-		for(i = 0; i <= lastIt; i++){
-		    if(curFreeId == 0 && rQueueStorageDP[i] == false){
-			curFreeId = i;
-		    }
-		}
+	int i = 0;
+	Item tmpItem;
+	numIt += 1;
+	/*
+	 * Resize array if needed
+	 */
+	if(numIt > rQueueStorage.length){
+	    Item[] newRQueueStorage = (Item[]) new Object[rQueueStorage.length*2]; 
+	    for(i = 0 ; i < rQueueStorage.length; i++){
+		newRQueueStorage[i] = rQueueStorage[i];
+		rQueueStorage[i] = null;
 	    }
+	    rQueueStorage = newRQueueStorage;
 	}
+	/*
+	 * Implement one shuffle iteration
+	 */
+	i = StdRandom.uniform(numIt);
+	tmpItem = rQueueStorage[i];
+	rQueueStorage[i] = item;
+	rQueueStorage[numIt - 1] = tmpItem;
+	return;
     }
     
     /**
@@ -76,23 +82,105 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Item dequeue(){              
-	
+	if(numIt == 0) throw new java.util.NoSuchElementException("Unable to get item from empty queue.\n"); 
+	Item retItem;
+	/*
+	 * Resize if needed
+	 */
+	numIt -= 1;
+	retItem = rQueueStorage[numIt];
+	if(rQueueStorage.length/4 > numIt){
+	    Item[] newRQueueStorage = (Item[]) new Object[rQueueStorage.length/2];
+	    for(int i = 0;i < numIt; i++){
+		newRQueueStorage[i] = rQueueStorage[i];
+		rQueueStorage[i] = null;
+	    }
+	    rQueueStorage = newRQueueStorage;
+	}
+	return retItem;
     }
     
     /**
      *  return (but do not delete) a random item
+     *  executes reorder elements
      * @return
      */
     public Item sample(){
-	
+	Item retItem;
+	int idItem;
+	/*
+	 * We return always the last element, so we must ensure that same element will
+	 * not be return each time we call this procedure
+	 * We shuffle it(last one) with others
+	 */
+	retItem = rQueueStorage[numIt - 1];
+	idItem = StdRandom.uniform(numIt);
+	rQueueStorage[numIt - 1] = rQueueStorage[idItem];
+	rQueueStorage[idItem] = retItem;
+	return retItem;
     }
     /**
      *  return an independent iterator over items in random order
      */
     public Iterator<Item> iterator(){
+	return new RandomQueueIter();
+    }
+    
+    class RandomQueueIter implements Iterator<Item>{
+	Item rQueueStorageIt[];
+	int avIt; //Steal avalible items
+	
+	public RandomQueueIter() {
+	    int i = 0;
+	    rQueueStorageIt = (Item[]) new Object[numIt];
+	    
+	    for(i = 0 ; i < numIt; i++){
+		rQueueStorageIt[i] = rQueueStorage[i];
+	    }
+	    avIt = rQueueStorageIt.length;
+	    // TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public boolean hasNext() {
+	    // TODO Auto-generated method stub
+	    return avIt != 0;
+	}
+
+	@Override
+	public Item next() {
+	    // TODO Auto-generated method stub
+	    if(avIt == 0) throw new java.util.NoSuchElementException("No elements left.");
+	    avIt -= 1;
+	    Item retIt = rQueueStorageIt[avIt];
+	    
+	    rQueueStorageIt[avIt] = null;
+	    return retIt;
+	}
+
+	@Override
+	public void remove() {
+	    throw new java.lang.UnsupportedOperationException("Remove are not supported for iterator.\n");
+	    // TODO Auto-generated method stub
+	    //return ;
+	}
 	
     }
     
+    public static void main(String[] args){
+	RandomizedQueue<Integer> testQueue= new RandomizedQueue<Integer>();
+	int j = 0;
+	for(j = 0 ; j < 10; j++){
+	    testQueue.enqueue(j);
+	}
+	for (Integer val : testQueue) {
+	    StdOut.println(val);
+	}
+	
+	StdOut.println("Hello world! from Randomized Queue!");
+	
+	
+    }
     /**Throw a java.lang.NullPointerException if the client attempts to add a null item; 
      * throw a java.util.NoSuchElementException if the client attempts to sample or dequeue an item from an empty randomized queue;
      *  throw a java.lang.UnsupportedOperationException if the client calls the remove() method in the iterator;
