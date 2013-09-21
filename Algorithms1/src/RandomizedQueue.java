@@ -173,7 +173,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	for(j = 0 ; j < 10; j++){
 	    testQueue.enqueue(j);
 	}
-	for (Integer val : testQueue) {
+//	Iterator  it1,it2;
+//	
+//	it1 = testQueue.iterator();
+//	it2 = testQueue.iterator();
+//	
+//	while(it1.hasNext()){
+//	    StdOut.println(it1.next());
+//	    StdOut.println(it2.next());
+//	}
+	
+	for (int val : testQueue) {
 	    StdOut.println(val);
 	}
 	

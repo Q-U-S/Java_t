@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 2012 (1.2)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<html><head>
+<title>Problem 11: 3SUM Hard Problems</title>
+<meta name="description" content="Problem 11: 3SUM Hard Problems">
+<meta name="keywords" content="Welcome">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Generator" content="LaTeX2HTML v2012">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="Problem%2011:%203SUM%20Hard%20Problems_files/Welcome.css">
+
+<link rel="next" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">
+<link rel="previous" href="http://cs.smith.edu/%7Eorourke/TOPP/P10.html">
+<link rel="up" href="http://cs.smith.edu/%7Eorourke/TOPP/Welcome.html">
+<link rel="next" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">
+</head>
+
+<body>
+<!--Navigation Panel-->
+<a name="tex2html207" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">
+<img alt="next" src="Problem%2011:%203SUM%20Hard%20Problems_files/next.gif" height="24" align="BOTTOM" border="0" width="37"></a> 
+<a name="tex2html205" href="http://cs.smith.edu/%7Eorourke/TOPP/Welcome.html">
+<img alt="up" src="Problem%2011:%203SUM%20Hard%20Problems_files/up.gif" height="24" align="BOTTOM" border="0" width="26"></a> 
+<a name="tex2html199" href="http://cs.smith.edu/%7Eorourke/TOPP/P10.html">
+<img alt="previous" src="Problem%2011:%203SUM%20Hard%20Problems_files/prev.gif" height="24" align="BOTTOM" border="0" width="63"></a>   
+<br>
+<b> Next:</b> <a name="tex2html208" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">Problem 12: Dynamic Planar</a>
+<b> Up:</b> <a name="tex2html206" href="http://cs.smith.edu/%7Eorourke/TOPP/Welcome.html">The Open Problems Project</a>
+<b> Previous:</b> <a name="tex2html200" href="http://cs.smith.edu/%7Eorourke/TOPP/P10.html">Problem 10: Simple Linear-Time</a>
+<br>
+<br>
+<!--End of Navigation Panel-->
+
+<h1><a name="SECTION000120000000000000000"></a><a name="Problem.11"></a>
+<br>
+Problem 11: 3SUM Hard Problems
+</h1>
+
+<dl>
+<dt><strong>Statement</strong></dt>
+<dd>Can the class of <i>3SUM hard</i> problems
+be solved in subquadratic time?
+These problems can be reduced from the problem
+of determining whether,
+given three sets of integers, <i>A</i>, <i>B</i>, and <i>C</i> with
+total size <i>n</i>, there are elements
+<i>a</i>∈<i>A</i>, <i>b</i>∈<i>B</i>, and <i>c</i>∈<i>C</i> such that <i>a</i> + <i>b</i> = <i>c</i>.
+</dd>
+<dt><strong>Origin</strong></dt>
+<dd>[<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#go-copcg-95">GO95</a>].
+</dd>
+<dt><strong>Status/Conjectures</strong></dt>
+<dd>Open.
+</dd>
+<dt><strong>Motivation</strong></dt>
+<dd>Many fundamental geometric problems fall in this class,
+e.g., computing the area of the union of <i>n</i> triangles.
+</dd>
+<dt><strong>Partial and Related Results</strong></dt>
+<dd><!-- MATH
+ $\Omega(n^2)$
+ -->
+<i>Ω</i>(<i>n</i><sup>2</sup>) lower bounds are known for 3SUM and a few 3SUM-hard
+problems in restricted decision tree models of computation
+[<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#es-blbda-95">ES95</a>,<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#e-lblsp-99">Eri99a</a>,<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#e-nlbch-99">Eri99b</a>].
+
+<p>
+3SUM and its obvious generalizations (4SUM, 5SUM, etc.) are examples
+of <i>linear satisfiability</i> problems.  A generic linear
+satisfiability problem asks, given an array of <i>n</i> integers, do any
+<i>r</i> of them satisfy the equation </p><p><!-- MATH
+ \begin{displaymath}
+\alpha_1 x_1 + \alpha_2 x_2 + \cdots
++ \alpha_r x_r = \alpha_0
+\end{displaymath}
+ -->
+</p>
+<div align="CENTER">
+<i>α</i><sub>1</sub><i>x</i><sub>1</sub> + <i>α</i><sub>2</sub><i>x</i><sub>2</sub> + <sup> ... </sup> + <i>α</i><sub>r</sub><i>x</i><sub>r</sub> = <i>α</i><sub>0</sub>
+</div><p></p>
+where <!-- MATH
+ $\alpha_0, \alpha_1, \alpha_2, \dots,
+\alpha_r$
+ -->
+<i>α</i><sub>0</sub>, <i>α</i><sub>1</sub>, <i>α</i><sub>2</sub>,..., <i>α</i><sub>r</sub> are fixed constants.  Erickson [<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#e-lblsp-99">Eri99a</a>] proved an
+<!-- MATH
+ $\Omega(n^{\lceil r/2 \rceil})$
+ -->
+<i>Ω</i>(<i>n</i><sup>⌈r/2⌉</sup>) lower bound for any problem of this type,
+in the restricted linear decision tree model.  This lower bound is tight
+except for a logarithmic factor when <i>r</i> is even.
+Ailon and Chazelle generalized Erickson's bound and
+improve it for large <i>r</i> or for more than <i>r</i> variables&nbsp;[<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#ac-lbldt-05">AC05</a>].
+
+<p>
+Baran et al.&nbsp;[<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#bdp-sa3-05">BDP05</a>] show that subquadratic algorithms for 3SUM
+are possible in common models of computation that allow more direct
+manipulation of the numbers instead of just real arithmetic,
+such as the word RAM.  The improvement they obtain is roughly quadratic
+in the parallelism offered by the model; for example, with lg&nbsp;<i>n</i>-bit words,
+they obtain an <!-- MATH
+ $O(n^2 \left(\frac{\lg \lg n}{\lg n}\right)^2)$
+ -->
+<i>O</i>(<i>n</i><sup>2</sup><img src="Problem%2011:%203SUM%20Hard%20Problems_files/img2.gif" alt="$ \left(\vphantom{\frac{\lg \lg n}{\lg n}}\right.$" height="45" align="MIDDLE" border="0" width="16"><img src="Problem%2011:%203SUM%20Hard%20Problems_files/img3.gif" alt="$ {\frac{{\lg \lg n}}{{\lg n}}}$" height="38" align="MIDDLE" border="0" width="41"><img src="Problem%2011:%203SUM%20Hard%20Problems_files/img4.gif" alt="$ \left.\vphantom{\frac{\lg \lg n}{\lg n}}\right)^{2}_{}$" height="51" align="MIDDLE" border="0" width="23">)-time
+algorithm.  With this word size, the 3SUM problem becomes whether any
+improvement beyond polylogarithmic factors (or indeed, beyond
+<!-- MATH
+ $\Theta(lg^2 n)$
+ -->
+<i>Θ</i>(<i>lg</i><sup>2</sup><i>n</i>)) is possible.
+</p></dd>
+<dt><strong>Appearances</strong></dt>
+<dd>[<a href="http://cs.smith.edu/%7Eorourke/TOPP/P11.html#mo-cgc42-01">MO01</a>]
+</dd>
+<dt><strong>Categories</strong></dt>
+<dd>lower bounds
+</dd>
+<dt><strong>Entry Revision History</strong></dt>
+<dd>J. O'Rourke, 2 Aug. 2001; Jeff Erickson, 20 June 2002; E. Demaine, 7 July 2005;
+Raphael Clifford, 7 July 2011.
+
+<p>
+</p></dd>
+</dl> 
+<h2><a name="SECTION000121000000000000000">
+Bibliography</a>
+</h2><dl compact="compact"><dd><p></p></dd><dt><a name="ac-lbldt-05">AC05</a>
+</dt><dd>
+N.&nbsp;Ailon and B.&nbsp;Chazelle.
+<br>
+Lower bounds for linear degeneracy testing.
+<br><em>Journal of the ACM (JACM)</em>, 52(2):157-171, 2005.
+
+<p>
+</p><p></p></dd><dt><a name="bdp-sa3-05">BDP05</a>
+</dt><dd>
+Ilya Baran, Erik&nbsp;D. Demaine, and Mihai P<img src="Problem%2011:%203SUM%20Hard%20Problems_files/img5.gif" alt="\normalsize{\v{a\/}}\kern.05em" height="15" align="BOTTOM" border="0" width="10">traşcu.
+<br><a name="tex2html13" href="http://theory.csail.mit.edu/%7Eedemaine/papers/3SUM_WADS2005/">Subquadratic algorithms for
+  3SUM</a>.
+<br>
+In <em>Proceedings of the 9th Workshop on Algorithms and Data
+  Structures</em>, Waterloo, Ontario, Canada, August 2005.
+<br>
+To appear.
+
+<p>
+</p><p></p></dd><dt><a name="e-lblsp-99">Eri99a</a>
+</dt><dd>
+Jeff Erickson.
+<br><a name="tex2html14" href="http://cjtcs.cs.uchicago.edu/articles/1999/8/contents.html">Lower bounds for linear satisfiability
+  problems</a>.
+<br><em>Chicago J. Theoret. Comput. Sci.</em>, 1999(8), 1999.
+
+<p>
+</p><p></p></dd><dt><a name="e-nlbch-99">Eri99b</a>
+</dt><dd>
+Jeff Erickson.
+<br>
+New lower bounds for convex hull problems in odd dimensions.
+<br><em>SIAM J. Comput.</em>, 28:1198-1214, 1999.
+
+<p>
+</p><p></p></dd><dt><a name="es-blbda-95">ES95</a>
+</dt><dd>
+Jeff Erickson and R.&nbsp;Seidel.
+<br>
+Better lower bounds on detecting affine and spherical degeneracies.
+<br><em>Discrete Comput. Geom.</em>, 13:41-57, 1995.
+
+<p>
+</p><p></p></dd><dt><a name="go-copcg-95">GO95</a>
+</dt><dd>
+A.&nbsp;Gajentaan and M.&nbsp;H. Overmars.
+<br>
+On a class of <i>O</i>(<i>n</i><sup>2</sup>) problems in computational geometry.
+<br><em>Comput. Geom. Theory Appl.</em>, 5:165-185, 1995.
+
+<p>
+</p><p></p></dd><dt><a name="mo-cgc42-01">MO01</a>
+</dt><dd>
+J.&nbsp;S.&nbsp;B. Mitchell and Joseph O'Rourke.
+<br>
+Computational geometry column 42.
+<br><em>Internat. J. Comput. Geom. Appl.</em>, 11(5):573-582, 2001.
+<br>
+Also in <em>SIGACT News</em> 32(3):63-72 (2001), Issue 120.
+
+<p>
+</p></dd></dl>
+
+<p>
+</p><hr>
+<!--Navigation Panel-->
+<a name="tex2html207" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">
+<img alt="next" src="Problem%2011:%203SUM%20Hard%20Problems_files/next.gif" height="24" align="BOTTOM" border="0" width="37"></a> 
+<a name="tex2html205" href="http://cs.smith.edu/%7Eorourke/TOPP/Welcome.html">
+<img alt="up" src="Problem%2011:%203SUM%20Hard%20Problems_files/up.gif" height="24" align="BOTTOM" border="0" width="26"></a> 
+<a name="tex2html199" href="http://cs.smith.edu/%7Eorourke/TOPP/P10.html">
+<img alt="previous" src="Problem%2011:%203SUM%20Hard%20Problems_files/prev.gif" height="24" align="BOTTOM" border="0" width="63"></a>   
+<br>
+<b> Next:</b> <a name="tex2html208" href="http://cs.smith.edu/%7Eorourke/TOPP/P12.html">Problem 12: Dynamic Planar</a>
+<b> Up:</b> <a name="tex2html206" href="http://cs.smith.edu/%7Eorourke/TOPP/Welcome.html">The Open Problems Project</a>
+<b> Previous:</b> <a name="tex2html200" href="http://cs.smith.edu/%7Eorourke/TOPP/P10.html">Problem 10: Simple Linear-Time</a>
+<!--End of Navigation Panel-->
+<address>
+The Open Problems Project - December 08, 2012
+</address>
+
+
+</body></html>

@@ -1,0 +1,11 @@
+--2013-09-20 18:42:28--  http://coursera.cs.princeton.edu/algs4/testing/collinear/
+Resolving coursera.cs.princeton.edu (coursera.cs.princeton.edu)... 128.112.136.74
+Connecting to coursera.cs.princeton.edu (coursera.cs.princeton.edu)|128.112.136.74|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.html.1’
+
+     0K .......... ...                                         3.06M=0.004s
+
+2013-09-20 18:42:28 (3.06 MB/s) - ‘index.html.1’ saved [13799]
+
