@@ -59,6 +59,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	/*
 	 * Resize array if needed
 	 */
+	
 	if(numIt > rQueueStorage.length){
 	    Item[] newRQueueStorage = (Item[]) new Object[rQueueStorage.length*2]; 
 	    for(i = 0 ; i < rQueueStorage.length; i++){
@@ -67,13 +68,18 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	    }
 	    rQueueStorage = newRQueueStorage;
 	}
+	
 	/*
 	 * Implement one shuffle iteration
 	 */
-	i = StdRandom.uniform(numIt);
-	tmpItem = rQueueStorage[i];
-	rQueueStorage[i] = item;
-	rQueueStorage[numIt - 1] = tmpItem;
+	if(numIt == 1){
+	    rQueueStorage[0] = item;
+	}else{
+		i = StdRandom.uniform(numIt - 1);
+		tmpItem = rQueueStorage[i];
+		rQueueStorage[i] = item;
+		rQueueStorage[numIt - 1] = tmpItem;
+	}
 	return;
     }
     
@@ -173,19 +179,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	for(j = 0 ; j < 10; j++){
 	    testQueue.enqueue(j);
 	}
-//	Iterator  it1,it2;
-//	
-//	it1 = testQueue.iterator();
-//	it2 = testQueue.iterator();
-//	
-//	while(it1.hasNext()){
-//	    StdOut.println(it1.next());
-//	    StdOut.println(it2.next());
-//	}
+	Iterator  it1,it2;
 	
-	for (int val : testQueue) {
-	    StdOut.println(val);
+	it1 = testQueue.iterator();
+	it2 = testQueue.iterator();
+	
+	while(it1.hasNext()){
+	    StdOut.println(it1.next());
+	    StdOut.println(it2.next());
 	}
+	
+//	for (int val : testQueue) {
+//	    StdOut.println(val);
+//	}
 	
 	StdOut.println("Hello world! from Randomized Queue!");
 	
