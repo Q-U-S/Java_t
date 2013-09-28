@@ -15,7 +15,7 @@ import java.util.Comparator;
 public class Point implements Comparable<Point> {
 
     // compare points by slope
-    public final Comparator<Point> SLOPE_ORDER;       // YOUR DEFINITION HERE
+    public final Comparator<Point> SLOPE_ORDER = new CompareSlope();       // YOUR DEFINITION HERE
 
     private final int x;                              // x coordinate
     private final int y;                              // y coordinate
@@ -27,6 +27,24 @@ public class Point implements Comparable<Point> {
         this.y = y;
     }
 
+    public static class CompareSlope implements Comparator<Point>{
+
+	    public int compare(Point p1, Point p2){
+		if((p1.y - y)/( p1.x - x) < (p2.y - y)/( p2.x - x))return 1; 
+		
+		if((p1.y - y)/( p1.x - x) > (p2.y - y)/( p2.x - x))return -1;
+		
+		return 0;
+		
+	    }
+	    boolean equal(Point p1, Point p2){
+		if((p1.y - y)/( p1.x - x) == (p2.y - y)/( p2.x - x))return true;
+		return false;
+	    }
+    }
+    
+
+    
     // plot this point to standard drawing
     public void draw() {
         /* DO NOT MODIFY */
@@ -41,12 +59,23 @@ public class Point implements Comparable<Point> {
 
     // slope between this point and that point
     public double slopeTo(Point that) {
+	double dSlope = 0.0;
+	
+	dSlope = (that.y - this.y)/(that.x - this.x);
+	
+	if(dSlope == -0.0) dSlope = 0.0;
+	
+	return dSlope;
         /* YOUR CODE HERE */
     }
 
     // is this point lexicographically smaller than that one?
     // comparing y-coordinates and breaking ties by x-coordinates
     public int compareTo(Point that) {
+	if(that.y < this.y) return 1;
+	if(that.y > this.y) return -1;
+	if(that.y == this.y && that.x > this.x) return -1;
+	return 0;
         /* YOUR CODE HERE */
     }
 
